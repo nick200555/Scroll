@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<!--
+  HOW TO EDIT THIS PAGE — quick guide
+  1. Search for "EDIT:" comments — each one tells you what to change.
+  2. Photos: there are 18 slots — 3 in "Before We Started Dating" (before-1.jpg
+     to before-3.jpg) and 5 per month (month1-1.jpg...month1-5.jpg,
+     month2-1.jpg...month2-5.jpg, month3-1.jpg...month3-5.jpg). Put files with
+     those exact names next to this HTML file, or change the src= values to
+     match whatever filenames you have. Until photos are added, cute
+     placeholders show.
+  3. Song: put your audio file next to this HTML file and change
+     the src="our-song.mp3" line to match its filename.
+  4. Once you're happy, upload this folder (html + photos + song) to a free
+     host like GitHub Pages or Netlify Drop, then make a QR code that points
+     to the live link (any free QR generator works).
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Three Months With You</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=EB+Garamond:ital@0;1&family=Caveat:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --parchment: #f2e6c9;
+    --parchment-dark: #e3d2a0;
+    --ink: #3a2718;
+    --oxblood: #7a2e2e;
+    --oxblood-light: #9c4040;
+    --gold: #b98b3e;
+    --moss: #5c6b47;
+  }
+
+  *{ box-sizing: border-box; }
+
+  html, body{
+    margin:0;
+    padding:0;
+    background: var(--parchment);
+    color: var(--ink);
+    font-family: 'EB Garamond', serif;
+    overflow-x: hidden;
+  }
+
+  body{
+    background-image:
+      radial-gradient(circle at 15% 20%, rgba(185,139,62,0.10), transparent 40%),
+      radial-gradient(circle at 85% 80%, rgba(122,46,46,0.08), transparent 45%);
+  }
+
+  h1, h2, .display{
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    margin: 0;
+  }
+
+  .handwritten{
+    font-family: 'Caveat', cursive;
+  }
+
+  /* ---------- Closed scroll (landing) ---------- */
+  #closed-scroll{
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--parchment-dark);
+    transition: opacity 0.5s ease 0.55s;
+  }
+
+  .scroll-roll{
+    width: min(320px, 80vw);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .rod{
+    width: 100%;
+    height: 26px;
+    border-radius: 13px;
+    background: linear-gradient(180deg, #8a5a30, #5e3b1c 55%, #432913);
+    box-shadow: 0 3px 6px rgba(0,0,0,0.35);
+    position: relative;
+    z-index: 2;
+    transition: transform 0.7s cubic-bezier(.6,0,.4,1), opacity 0.6s ease;
+  }
+
+  .rod::before, .rod::after{
+    content: "";
+    position: absolute;
+    top: -5px;
+    width: 14px;
+    height: 36px;
+    border-radius: 7px;
+    background: radial-gradient(circle, var(--gold), #8a6321);
+  }
+  .rod::before{ left: -7px; }
+  .rod::after{ right: -7px; }
+
+  .paper-band{
+    width: calc(100% - 10px);
+    height: 150px;
+    margin: -3px 0;
+    position: relative;
+    z-index: 1;
+    background:
+      repeating-linear-gradient(0deg, rgba(0,0,0,0.05) 0 1px, transparent 1px 7px),
+      linear-gradient(90deg, #e7d6a3, #f4e8c6 12%, #f4e8c6 88%, #e7d6a3);
+    box-shadow: inset 0 0 18px rgba(90,60,20,0.35);
+    transition: transform 0.7s cubic-bezier(.6,0,.4,1), opacity 0.6s ease;
+  }
+
+  .seal-btn{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 86px;
+    height: 86px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    background: radial-gradient(circle at 35% 30%, var(--oxblood-light), var(--oxblood) 60%, #4f1c1c);
+    box-shadow: 0 6px 14px rgba(0,0,0,0.4);
+    color: var(--parchment);
+    font-size: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 3;
+    transition: transform 0.25s ease;
+  }
+  .seal-btn:hover{ transform: translate(-50%,-50%) scale(1.07); }
+  .seal-btn.breaking{
+    animation: crack 0.45s ease forwards;
+    pointer-events: none;
+  }
+  @keyframes crack{
+    0%{ transform: translate(-50%,-50%) scale(1) rotate(0deg); }
+    40%{ transform: translate(-50%,-50%) scale(1.18) rotate(-8deg); }
+    100%{ transform: translate(-50%,-50%) scale(0) rotate(20deg); opacity: 0; }
+  }
+
+  .open-hint{
+    margin-top: 18px;
+    font-family: 'Caveat', cursive;
+    font-size: 1.2rem;
+    color: var(--ink);
+    opacity: 0.75;
+  }
+
+  #closed-scroll.unrolling{
+    opacity: 0;
+    pointer-events: none;
+  }
+  #closed-scroll.unrolling .rod.top{ transform: translateY(-130%) rotate(-7deg); opacity: 0; }
+  #closed-scroll.unrolling .rod.bottom{ transform: translateY(130%) rotate(7deg); opacity: 0; }
+  #closed-scroll.unrolling .paper-band{ transform: scaleY(8); opacity: 0; }
+  #closed-scroll.unrolling ~ #special-message-heading{ opacity: 0; pointer-events: none; }
+
+  /* ---------- Revealed content ---------- */
+  #content{
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.9s ease, transform 0.9s ease;
+    padding-bottom: 110px; /* room for the music bar */
+  }
+  #content.revealed{
+    opacity: 1;
+    transform: none;
+  }
+
+  header.hero{
+    text-align: center;
+    padding: 70px 24px 30px;
+  }
+  header.hero h1{
+    font-size: clamp(2.1rem, 6vw, 3.2rem);
+    color: var(--oxblood);
+    letter-spacing: 0.5px;
+  }
+  header.hero .dates{
+    margin-top: 10px;
+    font-size: 1.5rem;
+    color: var(--ink);
+  }
+
+  .intro-note{
+    max-width: 560px;
+    margin: 20px auto 0;
+    padding: 0 28px;
+    text-align: center;
+    font-style: italic;
+    font-size: 1.15rem;
+    line-height: 1.6;
+    color: #4a3520;
+  }
+
+  .flourish{
+    display: flex;
+    justify-content: center;
+    margin: 38px 0;
+    opacity: 0.7;
+  }
+
+  .chapter{
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .chapter-title{
+    text-align: center;
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    color: var(--oxblood);
+    margin: 0 0 6px;
+  }
+  .chapter-note{
+    max-width: 520px;
+    margin: 0 auto 28px;
+    padding: 0 28px;
+    text-align: center;
+    font-style: italic;
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: #4a3520;
+  }
+
+  .gallery{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 32px 28px;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .polaroid{
+    flex: 0 0 300px;
+    background: #fffdf8;
+    padding: 18px 18px 14px;
+    border-radius: 3px;
+    box-shadow: 0 10px 22px rgba(40,25,10,0.22);
+    transform: rotate(var(--r, 0deg));
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+  }
+  .polaroid:hover{
+    transform: rotate(0deg) scale(1.035);
+    box-shadow: 0 16px 30px rgba(40,25,10,0.28);
+  }
+  .gallery .polaroid:nth-child(odd){ --r: -3deg; }
+  .gallery .polaroid:nth-child(even){ --r: 2.5deg; }
+  .gallery .polaroid:nth-child(3n){ --r: -1.5deg; }
+
+  .photo-frame{
+    aspect-ratio: 4 / 3;
+    width: 100%;
+    background: var(--parchment-dark);
+    border: 1px dashed var(--gold);
+    position: relative;
+    overflow: hidden;
+  }
+  .photo-frame img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .frame-fallback{
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    color: #7a6230;
+    font-size: 0.8rem;
+    text-align: center;
+    padding: 8px;
+  }
+  .frame-fallback svg{ width: 30px; height: 30px; opacity: 0.6; }
+
+  .caption{
+    margin: 12px 4px 2px;
+    font-size: 1.05rem;
+    color: var(--ink);
+    text-align: center;
+    min-height: 1.4em;
+  }
+  .date-tag{
+    margin: 2px 4px 4px;
+    text-align: center;
+    font-family: 'Caveat', cursive;
+    font-size: 1.05rem;
+    color: var(--oxblood);
+  }
+
+  footer.signature{
+    text-align: center;
+    padding: 50px 24px 30px;
+  }
+  footer.signature .line1{
+    font-family: 'Caveat', cursive;
+    font-size: 1.8rem;
+    color: var(--ink);
+  }
+  footer.signature .line2{
+    margin-top: 6px;
+    font-family: 'Caveat', cursive;
+    font-size: 2.1rem;
+    color: var(--oxblood);
+  }
+
+  /* ---------- Music bar ---------- */
+  .music-bar{
+    position: fixed;
+    left: 50%;
+    bottom: 18px;
+    transform: translateX(-50%);
+    background: var(--ink);
+    color: var(--parchment);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 18px 8px 10px;
+    border-radius: 999px;
+    box-shadow: 0 10px 26px rgba(0,0,0,0.35);
+    z-index: 40;
+    max-width: 90vw;
+  }
+
+  .vinyl{
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    background:
+      radial-gradient(circle at center, var(--gold) 0 4px, #181210 5px 32%, #2b2220 33% 70%, #181210 71% 100%);
+  }
+  .vinyl.spinning{
+    animation: spin 2.8s linear infinite;
+  }
+  @keyframes spin{ to{ transform: rotate(360deg); } }
+
+  .song-info{
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+    max-width: 150px;
+    overflow: hidden;
+  }
+  .song-info .title{
+    font-size: 0.85rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .song-info .artist{
+    font-size: 0.72rem;
+    opacity: 0.7;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .play-btn{
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: none;
+    background: var(--oxblood);
+    color: var(--parchment);
+    cursor: pointer;
+    flex-shrink: 0;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .rod, .paper-band, #content, .polaroid, .seal-btn{ transition: none !important; }
+    .vinyl.spinning{ animation: none !important; }
+    .seal-btn.breaking{ animation: none !important; opacity: 0; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- ================= CLOSED SCROLL (landing screen) ================= -->
+  <div id="closed-scroll">
+    <div class="scroll-roll">
+      <div class="rod top"></div>
+      <div class="paper-band">
+        <button class="seal-btn" id="sealBtn" aria-label="Open our scroll">♥</button>
+      </div>
+      <div class="rod bottom"></div>
+    </div>
+    <!-- moved hint below the roll using flex column on wrapper -->
+  </div>
+  <p class="open-hint" id="openHint" style="position:fixed; bottom: 14%; left:50%; transform:translateX(-50%); z-index:51;">tap the seal to open something special</p>
+  <h2 id="special-message-heading" style="position: fixed; top: 30%; left: 50%; transform: translateX(-50%); z-index: 51; text-align: center; font-size: clamp(1.3rem, 5vw, 2.5rem); color: var(--oxblood); margin: 0; font-family: 'Cormorant Garamond', serif; font-weight: 600; max-width: 90vw; padding: 0 20px; transition: opacity 0.6s ease;">For my AFFU</h2>
+
+  <!-- ================= REVEALED CONTENT ================= -->
+  <div id="content">
+
+    <header class="hero">
+      <!-- EDIT: page title -->
+      <h1>Can't wait to sleep and wake up next to you forever</h1>
+      <!-- EDIT: the date range of your three months -->
+      <div class="dates handwritten">April 02 — Happily ever after</div>
+    </header>
+
+    <!-- EDIT: write a short note about your three months together -->
+    <p class="intro-note">
+      Happy aniversary Affu, I'm really grateful for you all the times we spend together
+      and I made something special to look back on how we enjoyed our time together and I cant wait to spend eternity with you. 
+    </p>
+    <p class="intro-note">Happy aniversary my Love, I hope you like it <3</p>
+
+    <div class="flourish">
+      <svg width="120" height="20" viewBox="0 0 120 20">
+        <path d="M0 10 H45" stroke="#5c6b47" stroke-width="1.5"/>
+        <circle cx="60" cy="10" r="4" fill="#7a2e2e"/>
+        <path d="M75 10 H120" stroke="#5c6b47" stroke-width="1.5"/>
+      </svg>
+    </div>
+
+    <!-- ================= BEFORE WE STARTED DATING ================= -->
+    <section class="chapter">
+      <h2 class="chapter-title">Here Are Some Photos From Before We Started Dating</h2>
+
+      <div class="gallery">
+
+        <figure class="polaroid">
+          <div class="photo-frame">
+            <img src="before-1.png" alt="Before photo 1" onload="this.nextElementSibling.style.display='none'" onerror="this.style.display='none'">
+            <div class="frame-fallback">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7l1.5-3h5L16 7"/><circle cx="12" cy="13.5" r="3.2"/></svg>
+              <span>before-1.jpg</span>
+            </div>
+          </div>
+          <p class="caption">The first ever hangout we had I remember dropping you at the metro station while you thought I was gonna kidnap you</p>
+         
+        </figure>
+
+        <figure class="polaroid">
+          <div class="photo-frame">
+            <img src="before-2.png" alt="Before photo 2" onload="this.nextElementSibling.style.display='none'" onerror="this.style.display='none'">
+            <div class="frame-fallback">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7l1.5-3h5L16 7"/><circle cx="12" cy="13.5" r="3.2"/></svg>
+              <span>before-2.jpg</span>
+            </div>
+          </div>
+          <p class="caption">This was the first ever photo that you had sent me on WhatsApp</p>
+        
+        </figure>
+
+        <figure class="polaroid">
+          <div class="photo-frame">
+            <img src="before-3.png" alt="Before photo 3" onload="this.nextElementSibling.style.display='none'" onerror="this.style.display='none'">
+            <div class="frame-fallback">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7l1.5-3h5L16 7"/><circle cx="12" cy="13.5" r="3.2"/></svg>
+              <span>before-3.jpg</span>
+            </div>
+          </div>
+          <p class="caption">The first ever photo I put up on my spam I remember I was doing my usual retarded shit saying things about safety on the metro and you helped me put my helmet on</p>
+        </figure>
+
+      </div>
+    </section>
+
+    <div class="flourish">
+      <svg width="120" height="20" viewBox="0 0 120 20">
+        <path d="M0 10 H45" stroke="#5c6b47" stroke-width="1.5"/>
+        <circle cx="60" cy="10" r="4" fill="#7a2e2e"/>
+        <path d="M75 10 H120" stroke="#5c6b47" stroke-width="1.5"/>
+      </svg>
+    </div>
+
+    <!-- ================= MONTH ONE ================= -->
+    <section class="chapter">
+      <h2 class="chapter-title">April</h2>
+
+      <div class="gallery">
+
+        <figure class="polaroid">
+          <div class="photo-frame">
+            <img src="month1-1.png" alt="Month 1 photo 1" onload="this.nextElementSibling.style.display='none'" onerror="this.style.display='none'">
+            <div class="frame-fallback">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7l1.5-3h5L16 7"/><circle cx="12" cy="13.5" r="3.2"/></svg>
+              <span>month1-1.png</span>
+            </div>
+          </div>
+          <p class="caption">Nitya's sister dance performance this day was so wholsome da I remember how we walked from race course all the way to cubbon park metro that walk was soo cute I remember we made one vlog about how we were gonna kidnap kids from cubbon park</p>
+        </figure>
+
+        <figure class="polaroid">
+          <div class="photo-frame">
+            <img src="month1-2.png" alt="Month 1 photo 2" onload="this.nextElementSibling.style.display='none'" onerror="this.style.display='none'">
+            <div class="frame-fallback">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7l1.5-3h5L16 7"/><circle cx="12" cy="13.5" r="3.2"/></svg>
+              <span>month1-2.jpg</span>
+            </div>
+          </div>
+          <p class="caption">This was the day you came home when my nana was there and you met her this was the day i painted you nails and was the first time I opened up and cried and you made me feel that you got me and i could be vulnerable around you</p>
+        </figure>
+
+        <figure class="polaroid">
+          <div class="photo-frame">
+            <img src="month1-3.png" alt="Month 1 photo 3" onload="this.nextElementSibling.style.display='none'" onerror="this.style.display='none'">
+            <div class="frame-fallback">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7l1.5-3h5L16 7"/><circle cx="12" cy="13.5" r="3.2"/></svg>
+              <span>month1-3.png</span>
+            </div>
+          </div>
+          <p class="caption">Cubbon park oh I always remember how you put your clip in my hair and you were shocked to see that I could braid your hair I remember you showing me the book with all the letters your friends had written for you for your birthday and then we went to McDonald's after that </p>
+        </figure>
+
+        <figure class="polaroid">
+          <div class="photo-frame">
+            <img src="month1-4.png" alt="Month 1 photo 4" onload="this.nextElementSibling.style.display='none'" onerror="this.style.display='none'">
+            <div class="frame-fallback">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7l1.5-3h5L16 7"/><circle cx="12" cy="13.5" r="3.2"/></svg>
+              <span>month1-4.png</span>
+            </div>
+          </div>
+          <p class="caption">IKEA day this reminds me of when we are gonna live together how we choose our furniture and how we tested out the kitchen and beds and I remember you were explainng to me what modular kitchens are and this was the day we got our matching wallpapers</p>
+        </figure>
+
+      </div>
+    </section>
+
+    <div class="flourish">
+      <svg width="120" height="20" viewBox="0 0 120 20">
+        <path d="M0 10 H45" stroke="#5c6b47" stroke-width="1.5"/>
+        <circle cx="60" cy="10" r="4" fill="#7a2e2e"/>
+        <path d="M75 10 H120" stroke="#5c6b47" stroke-width="1.5"/>
+      </svg>
+    </div>
+
+    <!-- ================= MONTH TWO ================= -->
+    <section class="chapter">
+      <h2 class="chapter-title">May</h2>
+
+      <div class="gallery">
+
+        <figure class="polaroid">
+          <div class="photo-frame">
+            <img src="month2-1.png" alt="Month 2 photo 1" onload="this.nextElementSibling.style.display='none'" onerror="this.style.display='none'">
+            <div class="frame-fallback">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7l1.5-3h5L16 7"/><circle cx="12" cy="13.5" r="3.2"/></svg>
+              <span>month2-1.png</span>
+            </div>
+          </div>
+          <p class="caption">This is how I'd hold you if we were hanging from a cliff and I'd never drop you down. I'm really sorry I hurt you that day and I assure I've been soo much more careful</p>
+        </figure>
+
+        <figure class="polaroid">
+          <div class="photo-frame">
+            <img src="month2-2.png" alt="Month 2 photo 2" onload="this.nextElementSibling.style.display='none'" onerror="this.style.display='none'">
+            <div class="frame-fallback">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7l1.5-3h5L16 7"/><circle cx="12" cy="13.5" r="3.2"/></svg>
+              <span>month2-2.png </span>
+            </div>
+          </div>
+          <p class="caption">Malleshwaram day out. I will always remember eating lickies with you how we had paan and gulab jamun ice cream and before that how we went and ate in Empire and that was the first time you spoke to me about marriage and the future I really loved that I would never forget that day and then we walked on loafers lane and took the feeder bus didnt and making out in the bus was lowkey mad cool</p>
+        </figure>
+
+        <figure class="polaroid">
+          <div class="photo-frame">
+            <img src="month2-3.png" alt="Month 2 photo 3" onload="this.nextElementSibling.style.display='none'" onerror="this.style.display='none'">
+            <div class="frame-fallback">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7l1.5-3h5L16 7"/><circle cx="12" cy="13.5" r="3.2"/></svg>
+              <span>month2-3.png</span>
+            </div>
+          </div>
+          <p class="caption">This will always be the cutest reel I have ever made with you. Holding on forever. I rememberded how we chilled at home and then the preist came home and I dropped you in the rain back to the metro. IDK I find it mad cool when were in the car driving in the rain and its just the both of us I find that mad hot</p>
+        </figure>
+
+        <figure class="polaroid">
+          <div class="photo-frame">
+            <img src="month2-4.png" alt="Month 2 photo 4" onload="this.nextElementSibling.style.display='none'" onerror="this.style.display='none'">
+            <div class="frame-fallback">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7l1.5-3h5L16 7"/><circle cx="12" cy="13.5" r="3.2"/></svg>
+              <span>month2-4.png</span>
+            </div>
+          </div>
+          <p class="caption">Brigade road shoppers. I will never forget how we ate in YAK kitchen and you did off off and fed me that was sooo cute da and then we got kinderjoy and gave each other the toy. And I bought that shitty vanilla cococola and we sat on the parapit wall and eat what we bought. I remember chumma playing around in the store I love how I can spend my time with you doing anything and have the absolute time of my life</p>
+        </figure>
+
+        <figure class="polaroid">
+          <div class="photo-frame">
+            <img src="month2-5.png" alt="Month 2 photo 5" onload="this.nextElementSibling.style.display='none'" onerror="this.style.display='none'">
+            <div class="frame-fallback">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7l1.5-3h5L16 7"/><circle cx="12" cy="13.5" r="3.2"/></svg>
+              <span>month2-5.png</span>
+            </div>
+          </div>
+          <p class="caption">The day we made the home gym reel where we hip thrusted each other. Your my strong girl Affu and you always will be. I would never stop carrying you. The story we made of us planking would be one of my favourite stories</p>
+        </figure>
+
+      </div>
+    </section>
+
+    <div class="flourish">
+      <svg width="120" height="20" viewBox="0 0 120 20">
+        <path d="M0 10 H45" stroke="#5c6b47" stroke-width="1.5"/>
+        <circle cx="60" cy="10" r="4" fill="#7a2e2e"/>
+        <path d="M75 10 H120" stroke="#5c6b47" stroke-width="1.5"/>
+      </svg>
+    </div>
+
+    <!-- ================= MONTH THREE ================= -->
+    <section class="chapter">
+      <h2 class="chapter-title">June</h2>
+
+      <div class="gallery">
+
+        <figure class="polaroid">
+          <div class="photo-frame">
+            <img src="month3-1.png" alt="Month 3 photo 1" onload="this.nextElementSibling.style.display='none'" onerror="this.style.display='none'">
+            <div class="frame-fallback">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7l1.5-3h5L16 7"/><circle cx="12" cy="13.5" r="3.2"/></svg>
+              <span>month3-1.png</span>
+            </div>
+          </div>
+          <p class="caption">The day you put make up on me. I will always remember how you just knew that I would follow you around and you took me to Rambos to eat a shawarma. I'm really sorry I made you cry that day I really am sorry Affu. I will always remember how you layed your head on my shoulder in the bus ride back home and I put the bus riders story to the song Pruple Rain</p>
+        </figure>
+
+        <figure class="polaroid">
+          <div class="photo-frame">
+            <img src="month3-2.png" alt="Month 3 photo 2" onload="this.nextElementSibling.style.display='none'" onerror="this.style.display='none'">
+            <div class="frame-fallback">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7l1.5-3h5L16 7"/><circle cx="12" cy="13.5" r="3.2"/></svg>
+              <span>month3-2.png</span>
+            </div>
+          </div>
+          <p class="caption">My birthday. Affu I will forever be gratful for everything that you did for my birthday you didn't need to get me anything but you still went out of your way to get me things my favourite creatine, my favourite protien bars the tank top and the photos I really like the tank top and Imma wear it today the day we go and watch obsession I hope you liked it on me.</p>
+        </figure>
+
+        <figure class="polaroid">
+          <div class="photo-frame">
+            <img src="month3-3.png" alt="Month 3 photo 3" onload="this.nextElementSibling.style.display='none'" onerror="this.style.display='none'">
+            <div class="frame-fallback">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7l1.5-3h5L16 7"/><circle cx="12" cy="13.5" r="3.2"/></svg>
+              <span>month3-3.png</span>
+            </div>
+          </div>
+          <p class="caption">I like how we just coincidentally match colors da. Thats like some crazy sign for us to be together, we dont even plan on matching but it just happens coincedantally I find that mad special.I really enjoy how we just belt food or like the way you say it we put one batting (idk if I'm saying it right tho). I really enjoy how we have that little competition of who can fit more food in their mouth. Oh and that ding dong song to which you feed me that was soo cute da I keep picturing the sotry we made. Till happily ever after Affu</p>
+        </figure>
+
+        <figure class="polaroid">
+          <div class="photo-frame">
+            <img src="month3-4.png" alt="Month 3 photo 4" onload="this.nextElementSibling.style.display='none'" onerror="this.style.display='none'">
+            <div class="frame-fallback">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7l1.5-3h5L16 7"/><circle cx="12" cy="13.5" r="3.2"/></svg>
+              <span>month3-4.png</span>
+            </div>
+          </div>
+          <p class="caption">I really enjoy the time we spend together before class the metro ride, the bus ride and how you sneak me into college by yourside so I don't get caught for my hair. Thats my favourite part of my day Affu us meeting in the morning and then getting breakfast together just the both of us I find that time soo special. You are my sunshine sweetheart</p>
+        </figure>
+
+        <figure class="polaroid">
+          <div class="photo-frame">
+            <img src="month3-5.png" alt="Month 3 photo 5" onload="this.nextElementSibling.style.display='none'" onerror="this.style.display='none'">
+            <div class="frame-fallback">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7l1.5-3h5L16 7"/><circle cx="12" cy="13.5" r="3.2"/></svg>
+              <span>month3-5.png</span>
+            </div>
+          </div>
+          <p class="caption">The first time we watched a movie together. This is my favourite photo of the both of us da. I really enjoyed this day the scooty rides and then how you played with my arm in the theater oh that makes me so hard. I really love how you noticed that I was getting scared and you told me its okay it'll be alright and held me tighter. I love how you took photos of me Affu I love you so much and I'm greatful for everythig that you do.</p>
+        </figure>
+
+      </div>
+    </section>
+
+    <div class="flourish">
+      <svg width="120" height="20" viewBox="0 0 120 20">
+        <path d="M0 10 H45" stroke="#5c6b47" stroke-width="1.5"/>
+        <circle cx="60" cy="10" r="4" fill="#7a2e2e"/>
+        <path d="M75 10 H120" stroke="#5c6b47" stroke-width="1.5"/>
+      </svg>
+    </div>
+
+    <!-- ================= SIGNATURE ================= -->
+    <footer class="signature">
+      <div class="line1">with all my heart,</div>
+      <!-- EDIT: your name -->
+      <div class="line2">Your NICKI</div>
+    </footer>
+
+  </div>
+
+  <!-- ================= MUSIC BAR ================= -->
+  <!-- EDIT: change the audio src below to your song's filename,
+       and edit the title / artist text -->
+  <audio id="bgMusic" loop>
+    <source src="music.mp3" type="audio/mpeg">
+  </audio>
+  <div class="music-bar">
+    <div class="vinyl" id="vinyl"></div>
+    <div class="song-info">
+      <span class="title">La Vie en rose</span>
+      <span class="artist">Your Nicki</span>
+    </div>
+    <button class="play-btn" id="playBtn" aria-label="Play song">▶</button>
+  </div>
+
+  <script>
+    const closedScroll = document.getElementById('closed-scroll');
+    const sealBtn = document.getElementById('sealBtn');
+    const openHint = document.getElementById('openHint');
+    const content = document.getElementById('content');
+    const bgMusic = document.getElementById('bgMusic');
+    const vinyl = document.getElementById('vinyl');
+    const playBtn = document.getElementById('playBtn');
+
+    function setPlayingUI(isPlaying){
+      vinyl.classList.toggle('spinning', isPlaying);
+      playBtn.textContent = isPlaying ? '❚❚' : '▶';
+      playBtn.setAttribute('aria-label', isPlaying ? 'Pause song' : 'Play song');
+    }
+
+    sealBtn.addEventListener('click', () => {
+      sealBtn.classList.add('breaking');
+      openHint.style.opacity = '0';
+
+      setTimeout(() => {
+        closedScroll.classList.add('unrolling');
+        content.classList.add('revealed');
+
+        bgMusic.play().then(() => setPlayingUI(true)).catch(() => setPlayingUI(false));
+      }, 280);
+
+      setTimeout(() => {
+        closedScroll.style.display = 'none';
+      }, 1100);
+    });
+
+    playBtn.addEventListener('click', () => {
+      if (bgMusic.paused){
+        bgMusic.play().then(() => setPlayingUI(true)).catch(() => {});
+      } else {
+        bgMusic.pause();
+        setPlayingUI(false);
+      }
+    });
+  </script>
+
+</body>
+</html>
